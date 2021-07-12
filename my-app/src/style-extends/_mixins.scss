@@ -1,0 +1,4 @@
+@mixin createSquare($size) {
+  width: $size;
+  height: $size;
+}

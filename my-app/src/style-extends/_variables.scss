@@ -1,0 +1,34 @@
+$tablet-screen-width: 800px;
+$mobile-screen-width: 400px;
+
+$valid-sign-size: 25px;
+$valid-sign-right-shift: 10px;
+
+$card-gap: 20px;
+$form-gap: 25px;
+$mobile-form-gap: 15px;
+
+$horizontal-paddings: 20px;
+$filter-items-vertical-paddings: 7px;
+$modal-window-padding: 50px;
+$tablet-modal-window-padding: 30px;
+$ticket-padding: 30px;
+$tablet-ticket-padding: 20px;
+$input-padding-right: $valid-sign-size + $valid-sign-right-shift + 10px;
+
+$bg-color: #f3f7fa;
+$reserve-bg-color: #fcfcfc;
+$font-color: #4c4c4c;
+$reserve-font-color: #6f6f6f;
+$gray-color: #dbdbdb;
+$hover-color: #e5f8fd;
+$input-hover-color: #b8b8b8;
+$input-focus-color: #686868;
+$blue: #2196f3;
+$buy-button-color: #ff6d00;
+$buy-button--disabled: #a54700;
+$stops-decoration-color: #adadad;
+$input-valid-error: #fa3d30;
+$placeholder-color: #8d8d8d;
+
+$button-border-radius: 7px;

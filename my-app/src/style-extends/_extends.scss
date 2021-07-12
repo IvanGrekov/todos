@@ -1,0 +1,101 @@
+@import './variables';
+@import './mixins';
+
+%visually-hidden {
+  position: absolute !important;
+
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+
+  white-space: nowrap !important;
+
+  border: 0 !important;
+  overflow: hidden !important;
+
+  clip: rect(0, 0, 0, 0) !important;
+}
+
+%card {
+  padding: 20px $horizontal-paddings;
+
+  border-radius: 10px;
+  background-color: $reserve-bg-color;
+
+  box-shadow: 0 0 6px $gray-color;
+}
+
+%search-params-title {
+  margin-bottom: 20px;
+
+  font-size: 16px;
+  letter-spacing: 0.03em;
+  color: #939393;
+  text-transform: uppercase;
+}
+
+%check-mark {
+  background-image: url('../images/check\ mark.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70% 70%;
+}
+
+%font-price {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.4em;
+}
+
+%button {
+  display: block;
+  width: 100%;
+  padding: 7px;
+
+  border: 0;
+  border-radius: 7px;
+  background-color: $buy-button-color;
+  box-shadow: 5px 5px 5px $gray-color;
+
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: perspective(500px) translateZ(-5px);
+    box-shadow: 0 0 0 #fff;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 5px 5px 5px $gray-color;
+  }
+}
+
+%button-text {
+  @extend %font-price;
+
+  color: #fff;
+}
+
+%stop-filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+
+  cursor: pointer;
+}
+
+%stop-filter-checkbox-icon {
+  @include createSquare(20px);
+
+  border: 1px solid $gray-color;
+  border-radius: 5px;
+}
+
+%stop-filter-checkbox-icon--active {
+  @extend %check-mark;
+
+  border-color: $blue;
+}

@@ -1,0 +1,13 @@
+@import './style-extends/variables';
+@import './style-extends/extends';
+
+body {
+  position: relative;
+  margin: 0;
+
+  background-color: $bg-color;
+}
+
+.visually-hidden {
+  @extend %visually-hidden;
+}
