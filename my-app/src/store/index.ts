@@ -71,5 +71,9 @@ export default class EventStore {
   get eventsDatesList(): string[] {
     return this.eventsDates;
   }
+
+  // get isTimeFree(): boolean {
+  //   return false;
+  // }
   //#endregion
 }

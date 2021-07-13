@@ -1,4 +1,7 @@
+@import './style-extends/reset';
+@import './style-extends/normalize';
 @import './style-extends/variables';
+@import './style-extends/fonts';
 @import './style-extends/extends';
 
 body {
