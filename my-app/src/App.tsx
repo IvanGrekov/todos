@@ -1,18 +1,15 @@
 import React from 'react';
 
-import { AddEvent } from './components/AddEventForm';
-
-import { observer } from 'mobx-react';
-import EventStore from './store';
+import { AddEvent } from './components/AddEvent';
 
 import './App.scss';
 
-const myEventStore = new EventStore();
-
-export const App = () => {
+const App = () => {
   return (
     <div className="App">
       <AddEvent />
     </div>
   );
 };
+
+export default App;

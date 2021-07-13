@@ -14,6 +14,14 @@ export const getValidDate = (date: Date | string, format?: string): string => {
 export const createTodayDate = (): Date => {
   const currentDate = new Date();
 
+  if (currentDate.getHours() >= 18) {
+    return new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() + 1
+    );
+  }
+
   return new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),

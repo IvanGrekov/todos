@@ -1,23 +1,13 @@
 @import '../../style-extends/variables';
 @import '../../style-extends/extends';
 
-.AddEventForm {
-  max-width: $tablet-screen-width;
-  margin: 0 auto;
+.FormComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
 
-  &__title {
-    margin-bottom: 20px;
-    font-size: 22px;
-  }
-
-  &__form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-
-    @extend %card;
-  }
+  @extend %card;
 
   &__inputs-wrapper {
     display: flex;

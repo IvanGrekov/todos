@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, autorun } from 'mobx';
 
 import { EventInterface } from '../types';
 import {
@@ -8,13 +8,14 @@ import {
 import { getValidDate } from '../helpers/dateHelper';
 import { getEventsDates } from '../helpers/storeHelper';
 
-export default class EventStore {
+class EventStore {
   events: EventInterface[] = getEventsFromLocalStorage();
   selectedData: string = getValidDate(new Date());
   eventsDates: string[] = getEventsDates(this.events);
 
   constructor() {
     makeAutoObservable(this);
+    autorun(() => this.updateLocalStorageData(this.events));
   }
 
   //#region Actions
@@ -25,13 +26,13 @@ export default class EventStore {
   addEvent(event: EventInterface) {
     this.events.push(event);
 
-    this.updateDatesAndLocalStorage(this.events);
+    this.updateEventsDates(this.events);
   }
 
   deleteEvent(id: string) {
     this.events = this.events.filter((event) => event.id !== id);
 
-    this.updateDatesAndLocalStorage(this.events);
+    this.updateEventsDates(this.events);
   }
 
   changeEvent(changedEvent: EventInterface) {
@@ -43,15 +44,8 @@ export default class EventStore {
     this.events[eventIndex] = { ...changedEvent };
 
     if (oldEvent.date !== changedEvent.date) {
-      this.updateDatesAndLocalStorage(this.events);
+      this.updateEventsDates(this.events);
     }
-
-    this.updateLocalStorageData(this.events);
-  }
-
-  updateDatesAndLocalStorage(newEventsList: EventInterface[]) {
-    this.updateEventsDates(newEventsList);
-    this.updateLocalStorageData(newEventsList);
   }
 
   updateEventsDates(newEventsList: EventInterface[]) {
@@ -61,19 +55,32 @@ export default class EventStore {
   updateLocalStorageData(newEventsList: EventInterface[]) {
     setEventsInLocalStorage(newEventsList);
   }
+
+  eventsByAnyDate(date: string): EventInterface[] {
+    return this.events.filter((event) => event.date === date);
+  }
+
+  defineIsTimeFree(date: string, startTime: string, endTime: string): boolean {
+    const events = this.eventsByAnyDate(date);
+
+    return !events.some(
+      (event: EventInterface) =>
+        (startTime > event.startTime && startTime < event.endTime) ||
+        (endTime > event.startTime && endTime < event.endTime)
+    );
+  }
   //#endregion
 
   //#region Computed values (derivations)
-  get eventsBySelectedData(): EventInterface[] {
-    return this.events.filter((event) => event.date === this.selectedData);
-  }
+  // get eventsBySelectedDate(): EventInterface[] {
+  //   return this.events.filter((event) => event.date === this.selectedData);
+  // }
 
   get eventsDatesList(): string[] {
     return this.eventsDates;
   }
-
-  // get isTimeFree(): boolean {
-  //   return false;
-  // }
-  //#endregion
 }
+
+const myEventStore = new EventStore();
+
+export default myEventStore;

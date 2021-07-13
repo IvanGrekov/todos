@@ -1,10 +1,14 @@
 import { FormValues } from '../types';
 import { getValidDate, createTodayDate } from '../helpers/dateHelper';
 
+const minTitleLength = 3;
+const minStartTime = 9;
+const maxEndTime = 18;
+
+let currentMinStartTime = minStartTime;
+
 export const validate = (values: FormValues) => {
   const errors: FormValues = {};
-
-  const minTitleLength = 3;
 
   if (!values.title) {
     errors.title = 'Обязательно для ввода';
@@ -40,6 +44,12 @@ const checkDate = (value: string): boolean => {
   const date = new Date(value);
   const todayDate = createTodayDate();
 
+  if (date.getTime() === todayDate.getTime()) {
+    currentMinStartTime = new Date().getHours() + 1;
+  } else {
+    currentMinStartTime = minStartTime;
+  }
+
   return date < todayDate;
 };
 
@@ -52,21 +62,17 @@ const generateDateError = (): string => {
 //#endregion
 
 //#region StartTimeValidation
-const minStartTime = 9;
-
 const checkStartTime = (value: string): boolean => {
   const hours = parseInt(value);
 
-  return hours < minStartTime;
+  return hours < currentMinStartTime;
 };
 
 const generateStartTimeError = (): string =>
-  `Минимальное время начала - ${minStartTime}:00`;
+  `Минимальное время начала - ${currentMinStartTime}:00`;
 //#endregion
 
 //#region EndTimeValidation
-const maxEndTime = 18;
-
 const checkEndTime = (value: string): boolean => {
   const hours = parseInt(value);
   const minutes = parseInt(value.slice(3));

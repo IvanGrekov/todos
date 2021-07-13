@@ -1,0 +1,18 @@
+@import '../../style-extends/variables';
+
+.AddEventForm {
+  max-width: $tablet-screen-width;
+  margin: 0 auto;
+
+  &__title {
+    margin-bottom: 20px;
+
+    font-size: 22px;
+  }
+
+  &__error {
+    margin-bottom: 20px;
+
+    color: $error-color;
+  }
+}
