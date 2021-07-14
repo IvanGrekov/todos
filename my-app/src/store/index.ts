@@ -5,13 +5,11 @@ import {
   getEventsFromLocalStorage,
   setEventsInLocalStorage,
 } from '../helpers/localStorageHelper';
-import { getValidDate } from '../helpers/dateHelper';
-import { getEventsDates } from '../helpers/storeHelper';
 
 class EventStore {
   events: EventInterface[] = getEventsFromLocalStorage();
-  selectedData: string = getValidDate(new Date());
-  eventsDates: string[] = getEventsDates(this.events);
+  selectedData: string = '';
+  eventsDates: string[] = this.defineEventsDates(this.events);
 
   constructor() {
     makeAutoObservable(this);
@@ -49,7 +47,7 @@ class EventStore {
   }
 
   updateEventsDates(newEventsList: EventInterface[]) {
-    this.eventsDates = getEventsDates(newEventsList);
+    this.eventsDates = this.defineEventsDates(newEventsList);
   }
 
   updateLocalStorageData(newEventsList: EventInterface[]) {
@@ -57,7 +55,9 @@ class EventStore {
   }
 
   eventsByAnyDate(date: string): EventInterface[] {
-    return this.events.filter((event) => event.date === date);
+    return this.events
+      .filter((event) => event.date === date)
+      .sort((prev, next) => prev.startTime.localeCompare(next.startTime));
   }
 
   defineIsTimeFree(date: string, startTime: string, endTime: string): boolean {
@@ -65,19 +65,31 @@ class EventStore {
 
     return !events.some(
       (event: EventInterface) =>
-        (startTime > event.startTime && startTime < event.endTime) ||
+        (startTime >= event.startTime && startTime < event.endTime) ||
         (endTime > event.startTime && endTime < event.endTime)
+    );
+  }
+
+  defineEventsDates(eventsList: EventInterface[]): string[] {
+    const dates = new Set(eventsList.map((event) => event.date));
+
+    return Array.from(dates.values()).sort((prev, next) =>
+      prev.localeCompare(next)
     );
   }
   //#endregion
 
   //#region Computed values (derivations)
-  // get eventsBySelectedDate(): EventInterface[] {
-  //   return this.events.filter((event) => event.date === this.selectedData);
-  // }
+  get getEvents(): EventInterface[] {
+    return this.events;
+  }
 
-  get eventsDatesList(): string[] {
+  get getEventsDatesList(): string[] {
     return this.eventsDates;
+  }
+
+  get getSelectedData(): string {
+    return this.selectedData;
   }
 }
 

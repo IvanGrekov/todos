@@ -1,40 +1,83 @@
 @import '../../style-extends/variables';
 @import '../../style-extends/extends';
+@import '../../style-extends/mixins';
 
-.FormComponent {
+.ItemEditing {
+  @extend %card;
+
+  position: fixed;
+  left: 50%;
+  top: 50%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
+  width: $input-width;
 
-  @extend %card;
+  border-radius: 15px;
+  transform: translate(-50%, -50%);
+  box-shadow: none;
+
+  &__header {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  &__title {
+    padding-top: 10px;
+
+    font-size: $mobile-font-size;
+    text-align: center;
+    color: $orange-color;
+
+    @media (min-width: $list-jump) {
+      font-size: $font-size;
+    }
+  }
+
+  &__closer {
+    @include createSquare(22px);
+    @extend %bg-contain;
+
+    position: absolute;
+    right: -7px;
+    top: -18px;
+
+    background-color: #fff;
+    background-image: url('../../images/delete-icon.svg');
+
+    border: 0;
+    outline: 0;
+    transform: perspective(100px);
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: perspective(100px) translateZ(15px);
+    }
+  }
 
   &__inputs-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
     width: 100%;
 
     @media (min-width: $mobile-screen-width) {
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: baseline;
+      width: 200px;
     }
 
     @media (min-width: $tablet-screen-width) {
-      gap: 20px $inputs-horizontal-gap;
+      width: 250px;
     }
   }
 
   &__label {
     width: 100%;
     max-width: $input-width;
-
-    @media (min-width: $tablet-screen-width) {
-      flex-basis: $input-width;
-    }
   }
 
   &__input-title {

@@ -1,0 +1,144 @@
+@import '../../style-extends/variables';
+@import '../../style-extends/extends';
+@import '../../style-extends/mixins';
+
+.EventItem {
+  display: flex;
+  gap: 15px;
+
+  @media (min-width: $list-jump) {
+    gap: 25px;
+  }
+
+  @media (min-width: $tablet-screen-width) {
+    gap: 35px;
+    font-size: 20px;
+  }
+
+  &__date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: $event-iten-paddings;
+
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+
+    border-radius: 10px;
+    background-color: $orange-color;
+
+    @media (min-width: $list-jump) {
+      padding: $event-iten-paddings 20px;
+      font-size: 22px;
+    }
+
+    @media (min-width: $tablet-screen-width) {
+      padding: $event-iten-paddings 35px;
+      font-size: 22px;
+    }
+  }
+
+  &__details-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__details {
+    display: grid;
+    align-content: center;
+    padding: $event-iten-paddings 0;
+  }
+
+  &__title {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    font-size: 20px;
+    line-height: 1em;
+    color: $orange-color;
+
+    @media (min-width: $tablet-screen-width) {
+      margin-bottom: 25px;
+      font-size: 24px;
+    }
+  }
+
+  &__additional-details-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__clock-icon {
+    @include createSquare(20px);
+    background-image: url('../../images/clock-icon.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+    @media (min-width: $tablet-screen-width) {
+      @include createSquare(25px);
+    }
+  }
+
+  &__time {
+    line-height: 1em;
+    font-size: 16px;
+
+    @media (min-width: $tablet-screen-width) {
+      font-size: 20px;
+    }
+  }
+
+  &__editing-form {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.24);
+  }
+
+  &__button {
+    @include createSquare(20px);
+    @extend %bg-contain;
+
+    border: 0;
+    background-color: #fff;
+    outline: 0;
+    transform: perspective(100px);
+    transition: transform 0.3s;
+
+    &--delete {
+      background-image: url('../../images/delete-icon.svg');
+    }
+
+    &--edit {
+      @include createSquare(25px);
+
+      margin-top: -6px;
+
+      background-image: url('../../images/edit-icon.svg');
+
+      @media (min-width: $tablet-screen-width) {
+        @include createSquare(30px);
+      }
+    }
+
+    &--shifted {
+      margin-left: -15px;
+    }
+
+    &:hover {
+      transform: perspective(100px) translateZ(15px);
+    }
+  }
+}

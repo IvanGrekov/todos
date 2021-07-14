@@ -1,13 +1,56 @@
 @import '../../style-extends/variables';
+@import '../../style-extends/extends';
+@import '../../style-extends/mixins';
 
 .AddEventForm {
-  max-width: $tablet-screen-width;
+  max-width: $add-event-section-max-width;
   margin: 0 auto;
 
-  &__title {
-    margin-bottom: 20px;
+  &__button {
+    @extend %button;
 
-    font-size: 22px;
+    height: 45px;
+
+    font-size: $mobile-font-size;
+
+    border-radius: 20px;
+
+    @media (min-width: $tablet-screen-width) {
+      font-size: $font-size;
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-size: $mobile-font-size;
+    color: $orange-color;
+
+    @media (min-width: $tablet-screen-width) {
+      font-size: $font-size;
+    }
+  }
+
+  &__form-closer {
+    @include createSquare(25px);
+    @extend %bg-contain;
+
+    background-color: $bg-color;
+    background-image: url('../../images/delete-icon.svg');
+
+    border: 0;
+    outline: 0;
+    transform: perspective(100px);
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: perspective(100px) translateZ(15px);
+    }
   }
 
   &__error {

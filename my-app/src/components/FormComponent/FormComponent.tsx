@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import { v4 as uuidv4 } from 'uuid';
 
 import myEventStore from '../../store';
-import { validate } from '../../helpers/AddEventHelper';
-import { getValidDate } from '../../helpers/dateHelper';
+import { validate } from '../../helpers/FormHelper';
+import { getValidDateFormat } from '../../helpers/dateHelper';
 import { EventInterface } from '../../types';
 
 import './FormComponent.scss';
@@ -20,7 +20,7 @@ export const FormComponent = observer(
           title,
           startTime,
           endTime,
-          date: getValidDate(date),
+          date: getValidDateFormat(date),
           id: uuidv4(),
         };
 
@@ -136,7 +136,7 @@ export const FormComponent = observer(
               disabled={!isValid || !dirty}
               className="FormComponent__button"
             >
-              Submit
+              Добавить
             </button>
           </Form>
         )}

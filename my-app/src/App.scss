@@ -1,7 +1,35 @@
 @import './style-extends/variables';
+@import './style-extends/extends';
 
 .App {
-  max-width: 1200px;
+  max-width: $max-width;
   margin: 0 auto;
-  padding: 30px $main-paddings 60px;
+  padding: 50px $main-paddings 60px;
+
+  &__title {
+    @extend %visually-hidden;
+
+    text-align: center;
+    color: $orange-color;
+
+    @media (min-width: $tablet-screen-width) {
+      font-size: 36px;
+    }
+  }
+
+  &__add-event-wrapper {
+    margin-bottom: 80px;
+
+    @media (min-width: $tablet-screen-width) {
+      margin-bottom: 120px;
+    }
+  }
+
+  &__select-date-wrapper {
+    margin-bottom: 35px;
+
+    @media (min-width: $tablet-screen-width) {
+      margin-bottom: 50px;
+    }
+  }
 }
