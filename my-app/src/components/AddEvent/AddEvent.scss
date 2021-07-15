@@ -1,19 +1,14 @@
-@import '../../style-extends/variables';
-@import '../../style-extends/extends';
-@import '../../style-extends/mixins';
+@import '../../index.scss';
 
-.AddEventForm {
+.AddEvent {
   max-width: $add-event-section-max-width;
   margin: 0 auto;
 
-  &__button {
-    @extend %button;
-
-    height: 45px;
+  &__button-wrapper {
+    height: 60px;
 
     font-size: $mobile-font-size;
-
-    border-radius: 20px;
+    border-radius: 30px;
 
     @media (min-width: $tablet-screen-width) {
       font-size: $font-size;
@@ -36,13 +31,9 @@
     }
   }
 
-  &__notification {
-    margin-bottom: 20px;
-
-    color: $error-color;
-
-    &--success {
-      color: $success-color;
+  &__notification-wrapper {
+    &--active {
+      margin-bottom: 20px;
     }
   }
 }

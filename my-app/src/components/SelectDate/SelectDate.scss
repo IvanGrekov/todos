@@ -1,4 +1,4 @@
-@import '../../style-extends/variables';
+@import '../../index.scss';
 
 .SelectDate {
   width: fit-content;
@@ -28,7 +28,7 @@
   }
 
   &__select {
-    padding: 3px 7px;
+    padding: 5px 10px;
     padding-right: 15px;
 
     font-size: 18px;

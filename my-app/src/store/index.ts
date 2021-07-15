@@ -1,6 +1,7 @@
 import { makeAutoObservable, autorun } from 'mobx';
 
 import { EventInterface } from '../types';
+
 import {
   getEventsFromLocalStorage,
   setEventsInLocalStorage,
@@ -17,6 +18,10 @@ class EventStore {
   }
 
   //#region Actions
+  updateLocalStorageData(newEventsList: EventInterface[]) {
+    setEventsInLocalStorage(newEventsList);
+  }
+
   setSelectedData(newSelectedData: string) {
     this.selectedData = newSelectedData;
   }
@@ -50,8 +55,12 @@ class EventStore {
     this.eventsDates = this.defineEventsDates(newEventsList);
   }
 
-  updateLocalStorageData(newEventsList: EventInterface[]) {
-    setEventsInLocalStorage(newEventsList);
+  defineEventsDates(eventsList: EventInterface[]): string[] {
+    const dates = new Set(eventsList.map((event) => event.date));
+
+    return Array.from(dates.values()).sort((prev, next) =>
+      prev.localeCompare(next)
+    );
   }
 
   eventsByAnyDate(date: string): EventInterface[] {
@@ -79,14 +88,6 @@ class EventStore {
       );
     });
   }
-
-  defineEventsDates(eventsList: EventInterface[]): string[] {
-    const dates = new Set(eventsList.map((event) => event.date));
-
-    return Array.from(dates.values()).sort((prev, next) =>
-      prev.localeCompare(next)
-    );
-  }
   //#endregion
 
   //#region Computed values (derivations)
@@ -101,6 +102,7 @@ class EventStore {
   get getSelectedData(): string {
     return this.selectedData;
   }
+  //#endregion
 }
 
 const myEventStore = new EventStore();

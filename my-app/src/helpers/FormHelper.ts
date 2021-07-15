@@ -1,4 +1,5 @@
 import { FormValues } from '../types';
+
 import {
   getValidDateFormat,
   getTodayDate,
@@ -9,27 +10,32 @@ import {
 
 const minTitleLength = 3;
 const minStartTime = 9;
-const maxEndTime = 18;
-const safeTimeGap = 30;
+export const maxEndTime = 18;
+const safeMinutesGap = 30;
 
 let currentMinStartTime = minStartTime;
-let minStartTimeMinutes = 0;
+let minStartMinutes = 0;
 
 const validate = (values: FormValues): FormValues => {
   const errors: FormValues = {};
 
+  //#region DateChecking
   if (!values.date) {
     errors.date = 'Обязательно для ввода';
   } else if (checkDate(values.date)) {
     errors.date = generateDateError();
   }
+  //#endregion
 
+  //#region StartTimeChecking
   if (!values.startTime) {
     errors.startTime = 'Обязательно для ввода';
   } else if (checkStartTime(values.startTime)) {
     errors.startTime = generateStartTimeError();
   }
+  //#endregion
 
+  //#region EndTimeChecking
   if (!values.endTime) {
     errors.endTime = 'Обязательно для ввода';
   } else if (isEndLessThenStart(values.startTime, values.endTime)) {
@@ -39,6 +45,7 @@ const validate = (values: FormValues): FormValues => {
   } else if (checkEndTime(values.endTime)) {
     errors.endTime = generateMaxEndTimeError();
   }
+  //#endregion
 
   return errors;
 };
@@ -63,32 +70,31 @@ export const validateEditingItemForm = (values: FormValues): FormValues => {
 
 //#region DateValidation
 const checkDate = (value: string): boolean => {
-  const date = new Date(value);
-  date.setHours(0);
+  const date = new Date(value).setHours(0);
+  const todayDate = getTodayDate().getTime();
+  const todayWorkingDate = createTodayWorkingDate().getTime();
 
-  const todayDate = createTodayWorkingDate();
-
-  if (date.getTime() === getTodayDate().getTime()) {
+  if (date === todayDate) {
     const date = new Date();
 
-    date.setMinutes(roundMinutes(date.getMinutes()) + safeTimeGap);
+    date.setMinutes(roundMinutes(date.getMinutes()) + safeMinutesGap);
 
     currentMinStartTime = date.getHours();
-    minStartTimeMinutes = date.getMinutes();
+    minStartMinutes = date.getMinutes();
   } else {
     currentMinStartTime = minStartTime;
-    minStartTimeMinutes = 0;
+    minStartMinutes = 0;
   }
 
-  return date < todayDate;
+  return date < todayWorkingDate;
 };
 
 const generateDateError = (): string => {
-  const todayDate = createTodayWorkingDate();
+  const todayWorkingDate = createTodayWorkingDate();
   const dateFormat = 'LL';
 
   return `Выберите дату начиная от ${getValidDateFormat(
-    todayDate,
+    todayWorkingDate,
     dateFormat
   )}`;
 };
@@ -97,10 +103,10 @@ const generateDateError = (): string => {
 //#region StartTimeValidation
 const checkStartTime = (value: string): boolean => {
   const hours = parseInt(value);
-  const minutes = parseInt(value.slice(3));
+  const minutes = parseInt(value.slice(3)); // Input time format - 09:00
 
   if (hours <= currentMinStartTime) {
-    return hours < currentMinStartTime || minutes < minStartTimeMinutes;
+    return hours < currentMinStartTime || minutes < minStartMinutes;
   }
 
   return hours < currentMinStartTime;
@@ -108,14 +114,14 @@ const checkStartTime = (value: string): boolean => {
 
 const generateStartTimeError = (): string =>
   `Минимальное время начала - ${currentMinStartTime}:${getValidMinutes(
-    minStartTimeMinutes
+    minStartMinutes
   )}`;
 //#endregion
 
 //#region EndTimeValidation
 const checkEndTime = (value: string): boolean => {
   const hours = parseInt(value);
-  const minutes = parseInt(value.slice(3));
+  const minutes = parseInt(value.slice(3)); // Input time format - 09:00
 
   if (hours > maxEndTime) {
     return true;
@@ -136,9 +142,9 @@ const isEndLessThenStart = (
   endTime: string
 ): boolean => {
   const startHours = parseInt(startTime);
-  const startMinutes = parseInt(startTime.slice(3));
+  const startMinutes = parseInt(startTime.slice(3)); // Input time format - 09:00
   const endHours = parseInt(endTime);
-  const endMinutes = parseInt(endTime.slice(3));
+  const endMinutes = parseInt(endTime.slice(3)); // Input time format - 09:00
 
   if (startHours > endHours) {
     return true;
@@ -159,15 +165,11 @@ const isEndEqualStart = (
   endTime: string
 ): boolean => {
   const startHours = parseInt(startTime);
-  const startMinutes = parseInt(startTime.slice(3));
+  const startMinutes = parseInt(startTime.slice(3)); // Input time format - 09:00
   const endHours = parseInt(endTime);
-  const endMinutes = parseInt(endTime.slice(3));
+  const endMinutes = parseInt(endTime.slice(3)); // Input time format - 09:00
 
-  if (startHours === endHours && startMinutes === endMinutes) {
-    return true;
-  }
-
-  return false;
+  return startHours === endHours && startMinutes === endMinutes;
 };
 
 const generateEndTimeEqualError = (): string =>

@@ -1,0 +1,88 @@
+@import '../../index.scss';
+
+.ItemEditingForm {
+  @extend %form;
+
+  position: fixed;
+  left: 50%;
+  top: 50%;
+
+  gap: 20px;
+  width: $input-width;
+
+  transform: translate(-50%, -50%);
+  box-shadow: none;
+
+  &__header {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+
+    &--success {
+      margin-bottom: 0;
+    }
+  }
+
+  &__title {
+    padding-top: 15px;
+
+    font-size: $mobile-font-size;
+    text-align: center;
+    color: $orange-color;
+
+    @media (min-width: $list-jump) {
+      font-size: $font-size;
+    }
+
+    &--success {
+      font-size: 20px;
+    }
+  }
+
+  &__closer-wrapper {
+    position: absolute;
+    right: -7px;
+    top: -18px;
+  }
+
+  &__inputs-wrapper {
+    @extend %inputs-wrapper;
+
+    gap: 10px;
+  }
+
+  &__label {
+    @extend %label;
+  }
+
+  &__input-title {
+    @extend %input-title;
+  }
+
+  &__input {
+    @extend %input;
+
+    &--error {
+      border-color: $error-color;
+    }
+
+    &--success {
+      border-color: $blue;
+    }
+  }
+
+  &__error {
+    @extend %error;
+  }
+
+  &__button-wrapper {
+    @extend %form-button;
+
+    padding-top: 10px;
+  }
+
+  &__error-notification {
+    font-size: 16px;
+    text-align: center;
+  }
+}

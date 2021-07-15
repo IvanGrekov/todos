@@ -1,20 +1,20 @@
-$tablet-screen-width: 800px;
-$mobile-screen-width: 400px;
-$list-jump: 600px;
 $max-width: 1200px;
+$tablet-screen-width: 800px;
+$list-jump: 600px;
+$mobile-screen-width: 400px;
 
 $main-paddings: 20px;
 
-$add-event-section-max-width: $tablet-screen-width;
 $input-width: 320px - $main-paddings * 2;
+$add-event-section-max-width: $tablet-screen-width;
+$event-item-min-width: 320px - $main-paddings * 2;
+
+$event-iten-paddings: 10px;
 $inputs-horizontal-gap: 50px;
 $button-margin-right: (
     $add-event-section-max-width - 2 * $input-width - $inputs-horizontal-gap - 2 *
       $main-paddings
   ) / 2;
-
-$event-item-min-width: 320px - $main-paddings * 2;
-$event-iten-paddings: 10px;
 
 $font-size: 26px;
 $mobile-font-size: 22px;

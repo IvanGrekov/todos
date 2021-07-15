@@ -6,7 +6,7 @@ import { SelectDate } from './components/SelectDate';
 
 import './App.scss';
 
-const App = () => {
+export const App = () => {
   return (
     <div className="App">
       <header className="App__header">
@@ -29,5 +29,3 @@ const App = () => {
     </div>
   );
 };
-
-export default App;

@@ -8,20 +8,13 @@
 
   &__title {
     @extend %visually-hidden;
-
-    text-align: center;
-    color: $orange-color;
-
-    @media (min-width: $tablet-screen-width) {
-      font-size: 36px;
-    }
   }
 
   &__add-event-wrapper {
-    margin-bottom: 80px;
+    margin-bottom: 70px;
 
     @media (min-width: $tablet-screen-width) {
-      margin-bottom: 120px;
+      margin-bottom: 110px;
     }
   }
 

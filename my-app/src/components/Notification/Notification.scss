@@ -1,0 +1,11 @@
+@import '../../index.scss';
+
+.Notification {
+  &--error {
+    color: $error-color;
+  }
+
+  &--success {
+    color: $success-color;
+  }
+}

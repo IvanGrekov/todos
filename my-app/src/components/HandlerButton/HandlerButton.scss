@@ -1,0 +1,36 @@
+@import '../../index.scss';
+
+.HandlerButton {
+  @include createSquare(22px);
+  @extend %bg-contain;
+
+  border: 0;
+  background-color: $bg-color;
+  outline: 0;
+
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: perspective(100px) translateZ(15px);
+  }
+
+  &--white {
+    background-color: #fff;
+  }
+
+  &--close {
+    background-image: url('../../images/close-icon.svg');
+  }
+
+  &--edit {
+    @include createSquare(26px);
+
+    margin-top: -6px;
+
+    background-image: url('../../images/edit-icon.svg');
+
+    @media (min-width: $tablet-screen-width) {
+      @include createSquare(30px);
+    }
+  }
+}

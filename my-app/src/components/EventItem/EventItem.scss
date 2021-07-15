@@ -1,6 +1,4 @@
-@import '../../style-extends/variables';
-@import '../../style-extends/extends';
-@import '../../style-extends/mixins';
+@import '../../index.scss';
 
 .EventItem {
   display: flex;
@@ -32,11 +30,13 @@
 
     @media (min-width: $list-jump) {
       padding: $event-iten-paddings 20px;
+
       font-size: 22px;
     }
 
     @media (min-width: $tablet-screen-width) {
       padding: $event-iten-paddings 35px;
+
       font-size: 22px;
     }
   }
@@ -65,6 +65,7 @@
 
     @media (min-width: $tablet-screen-width) {
       margin-bottom: 25px;
+
       font-size: 24px;
     }
   }

@@ -1,9 +1,18 @@
 import React, { useCallback, useState } from 'react';
+import classNames from 'classnames';
 
-import { ButtonHandler } from '../ButtonHandler';
-import { FormComponent } from '../FormComponent';
+import { HandlerButton } from '../HandlerButton';
+import { Notification } from '../Notification';
+import { ItemAddingForm } from '../ItemAddingForm';
+import { Button } from '../Button';
 
 import './AddEvent.scss';
+
+const handlerTitle = 'Закрыть форму добавления события';
+const errorMessage = 'Ошибка добавления! Уже есть событие на указанное время!';
+const successMessage = 'Событие успешно добавлено!';
+const buttonText = 'Добавить событие';
+const buttonTitle = 'Открыть форму добавления события';
 
 export const AddEvent = () => {
   const [formStatus, setFormStatus] = useState(false);
@@ -11,50 +20,53 @@ export const AddEvent = () => {
   const [addingSuccess, setAddingSuccess] = useState(false);
 
   const handleFormStatus = useCallback(() => {
-    setFormStatus(false);
+    setFormStatus((prevState) => !prevState);
+    setAddingError(false);
+    setAddingSuccess(false);
   }, []);
 
   return (
-    <div className="AddEventForm">
+    <div className="AddEvent">
       {formStatus ? (
         <>
-          <header className="AddEventForm__header">
-            <h2 className="AddEventForm__title">Добавить событие</h2>
+          <header className="AddEvent__header">
+            <h2 className="AddEvent__title">Добавить событие</h2>
 
-            <ButtonHandler
+            <HandlerButton
               handler={handleFormStatus}
-              title={'Закрыть форму добавления события'}
+              title={handlerTitle}
               buttonClose={true}
             />
           </header>
 
-          {addingError && (
-            <p className="AddEventForm__notification">
-              Ошибка добавления! Уже есть событие на указанное время!
-            </p>
-          )}
+          <div
+            className={classNames('AddEvent__notification-wrapper', {
+              'AddEvent__notification-wrapper--active':
+                addingError || addingSuccess,
+            })}
+          >
+            {addingError && (
+              <Notification text={errorMessage} errorStatus={true} />
+            )}
 
-          {addingSuccess && (
-            <p className="AddEventForm__notification AddEventForm__notification--success">
-              Событие успешно добавлено!
-            </p>
-          )}
+            {addingSuccess && (
+              <Notification text={successMessage} successStatus={true} />
+            )}
+          </div>
 
-          <FormComponent
+          <ItemAddingForm
             setAddingError={setAddingError}
             setAddingSuccess={setAddingSuccess}
           />
         </>
       ) : (
-        <button
-          className="AddEventForm__button"
-          title="Открыть форму добавления события"
-          onClick={() => {
-            setFormStatus(true);
-          }}
-        >
-          Добавить событие
-        </button>
+        <div className="AddEvent__button-wrapper">
+          <Button
+            handler={handleFormStatus}
+            text={buttonText}
+            title={buttonTitle}
+          />
+        </div>
       )}
     </div>
   );

@@ -1,19 +1,23 @@
 import React, { useState, useCallback } from 'react';
-
 import { observer } from 'mobx-react';
+
 import { EventInterface } from '../../types';
+import myEventStore from '../../store';
+import { ItemEditing } from '../ItemEditing';
+import { HandlerButton } from '../HandlerButton';
+
+import { makeCapitalFirstLetter } from '../../helpers/EventItemHelper';
 import {
   getHtmlDateFormat,
   getDayForDisplay,
   getMonthForDisplay,
   getYearForDisplay,
 } from '../../helpers/dateHelper';
-import { makeCapitalFirstLetter } from '../../helpers/EventItemHelper';
-import myEventStore from '../../store';
-import { ItemEditing } from '../ItemEditing';
-import { ButtonHandler } from '../ButtonHandler';
 
 import './EventItem.scss';
+
+const handlerEditingTitle = 'Изменить событие';
+const handlerItemDeletingTitle = 'Удалить событие';
 
 export const EventItem = observer(({ event }: { event: EventInterface }) => {
   const [editingStatus, setStatusEditing] = useState(false);
@@ -41,9 +45,9 @@ export const EventItem = observer(({ event }: { event: EventInterface }) => {
           <h3 className="EventItem__title">
             <span>{makeCapitalFirstLetter(title)}</span>
 
-            <ButtonHandler
+            <HandlerButton
               handler={handleStatusEditing}
-              title={'Изменить событие'}
+              title={handlerEditingTitle}
               whiteBackground={true}
               buttonEdit={true}
             />
@@ -79,9 +83,9 @@ export const EventItem = observer(({ event }: { event: EventInterface }) => {
           )}
         </div>
 
-        <ButtonHandler
+        <HandlerButton
           handler={onDeleteEvent}
-          title={'Удалить событие'}
+          title={handlerItemDeletingTitle}
           whiteBackground={true}
           buttonClose={true}
         />

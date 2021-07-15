@@ -1,0 +1,55 @@
+@import '../../index.scss';
+
+.ItemAddingForm {
+  @extend %form;
+
+  gap: 30px;
+
+  &__inputs-wrapper {
+    @extend %inputs-wrapper;
+
+    gap: 20px;
+
+    @media (min-width: $mobile-screen-width) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: baseline;
+    }
+
+    @media (min-width: $tablet-screen-width) {
+      gap: 20px $inputs-horizontal-gap;
+    }
+  }
+
+  &__label {
+    @extend %label;
+
+    @media (min-width: $tablet-screen-width) {
+      flex-basis: $input-width;
+    }
+  }
+
+  &__input-title {
+    @extend %input-title;
+  }
+
+  &__input {
+    @extend %input;
+
+    &--error {
+      border-color: $error-color;
+    }
+
+    &--success {
+      border-color: $blue;
+    }
+  }
+
+  &__error {
+    @extend %error;
+  }
+
+  &__button-wrapper {
+    @extend %form-button;
+  }
+}

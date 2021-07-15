@@ -1,6 +1,8 @@
 import moment from 'moment';
 import 'moment/locale/ru';
 
+import { maxEndTime } from './FormHelper';
+
 export const dateFormat = 'L'; // 12.07.2021
 
 export const getValidDateFormat = (
@@ -22,18 +24,6 @@ const getDateForDisplay = (value: string): string => {
   return getValidDateFormat(date, 'LL'); // LL ===  14 июля 2021 г.
 };
 
-export const getDayForDisplay = (value: string): string =>
-  getDateForDisplay(value).split(' ')[0];
-
-export const getMonthForDisplay = (value: string): string =>
-  getDateForDisplay(value).split(' ')[1];
-
-export const getYearForDisplay = (value: string): string =>
-  getDateForDisplay(value).split(' ')[2];
-
-export const getHtmlDateFormat = (value: string): string =>
-  value.split('.').reverse().join('-'); // Initial format at top of this file
-
 export const getTodayDate = (): Date => {
   const currentDate = new Date();
 
@@ -47,7 +37,7 @@ export const getTodayDate = (): Date => {
 export const createTodayWorkingDate = (): Date => {
   const currentDate = new Date();
 
-  if (currentDate.getHours() >= 18) {
+  if (currentDate.getHours() >= maxEndTime) {
     return new Date(
       currentDate.getFullYear(),
       currentDate.getMonth(),
@@ -57,6 +47,18 @@ export const createTodayWorkingDate = (): Date => {
 
   return getTodayDate();
 };
+
+export const getDayForDisplay = (value: string): string =>
+  getDateForDisplay(value).split(' ')[0];
+
+export const getMonthForDisplay = (value: string): string =>
+  getDateForDisplay(value).split(' ')[1];
+
+export const getYearForDisplay = (value: string): string =>
+  getDateForDisplay(value).split(' ')[2];
+
+export const getHtmlDateFormat = (value: string): string =>
+  value.split('.').reverse().join('-'); // Initial format at top of this file
 
 export const roundMinutes = (value: number): number =>
   Math.ceil(value / 10) * 10;

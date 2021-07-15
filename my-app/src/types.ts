@@ -12,3 +12,5 @@ export interface FormValues {
   startTime?: string;
   endTime?: string;
 }
+
+export type ButtonType = 'button' | 'submit' | 'reset';
