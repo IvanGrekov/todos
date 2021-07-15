@@ -1,7 +1,8 @@
 import { FormValues } from '../types';
 import {
   getValidDateFormat,
-  createTodayDate,
+  getTodayDate,
+  createTodayWorkingDate,
   roundMinutes,
   getValidMinutes,
 } from './dateHelper';
@@ -14,14 +15,8 @@ const safeTimeGap = 30;
 let currentMinStartTime = minStartTime;
 let minStartTimeMinutes = 0;
 
-export const validate = (values: FormValues) => {
+const validate = (values: FormValues): FormValues => {
   const errors: FormValues = {};
-
-  if (!values.title) {
-    errors.title = 'Обязательно для ввода';
-  } else if (values.title.length < minTitleLength) {
-    errors.title = `Минимум ${minTitleLength} символа`;
-  }
 
   if (!values.date) {
     errors.date = 'Обязательно для ввода';
@@ -48,16 +43,32 @@ export const validate = (values: FormValues) => {
   return errors;
 };
 
+export const validateAddingItemForm = (values: FormValues): FormValues => {
+  const errors: FormValues = { ...validate(values) };
+
+  if (!values.title) {
+    errors.title = 'Обязательно для ввода';
+  } else if (values.title.length < minTitleLength) {
+    errors.title = `Минимум ${minTitleLength} символа`;
+  }
+
+  return errors;
+};
+
+export const validateEditingItemForm = (values: FormValues): FormValues => {
+  const errors: FormValues = { ...validate(values) };
+
+  return errors;
+};
+
 //#region DateValidation
 const checkDate = (value: string): boolean => {
   const date = new Date(value);
   date.setHours(0);
 
-  const todayDate = createTodayDate();
+  const todayDate = createTodayWorkingDate();
 
-  console.log(todayDate);
-
-  if (date.getTime() === new Date().setHours(0)) {
+  if (date.getTime() === getTodayDate().getTime()) {
     const date = new Date();
 
     date.setMinutes(roundMinutes(date.getMinutes()) + safeTimeGap);
@@ -73,7 +84,7 @@ const checkDate = (value: string): boolean => {
 };
 
 const generateDateError = (): string => {
-  const todayDate = createTodayDate();
+  const todayDate = createTodayWorkingDate();
   const dateFormat = 'LL';
 
   return `Выберите дату начиная от ${getValidDateFormat(
@@ -88,7 +99,11 @@ const checkStartTime = (value: string): boolean => {
   const hours = parseInt(value);
   const minutes = parseInt(value.slice(3));
 
-  return hours < currentMinStartTime || minutes < minStartTimeMinutes;
+  if (hours <= currentMinStartTime) {
+    return hours < currentMinStartTime || minutes < minStartTimeMinutes;
+  }
+
+  return hours < currentMinStartTime;
 };
 
 const generateStartTimeError = (): string =>

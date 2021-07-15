@@ -5,14 +5,20 @@ import classNames from 'classnames';
 import { v4 as uuidv4 } from 'uuid';
 
 import myEventStore from '../../store';
-import { validate } from '../../helpers/FormHelper';
+import { validateAddingItemForm } from '../../helpers/FormHelper';
 import { getValidDateFormat } from '../../helpers/dateHelper';
 import { EventInterface } from '../../types';
 
 import './FormComponent.scss';
 
 export const FormComponent = observer(
-  ({ setAddingError }: { setAddingError: Function }) => {
+  ({
+    setAddingError,
+    setAddingSuccess,
+  }: {
+    setAddingError: Function;
+    setAddingSuccess: Function;
+  }) => {
     const handleSubmit = useCallback(
       (values, { resetForm }) => {
         const { title, date, startTime, endTime } = values;
@@ -33,17 +39,20 @@ export const FormComponent = observer(
         if (isTimeFree) {
           myEventStore.addEvent(newEvent);
           resetForm();
+          setAddingError(false);
+          setAddingSuccess(true);
         } else {
           setAddingError(true);
+          setAddingSuccess(false);
         }
       },
-      [setAddingError]
+      [setAddingError, setAddingSuccess]
     );
 
     return (
       <Formik
         initialValues={{ title: '', date: '', startTime: '', endTime: '' }}
-        validate={validate}
+        validate={validateAddingItemForm}
         onSubmit={handleSubmit}
       >
         {({ values, errors, touched, isValid, dirty }) => (

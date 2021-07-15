@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
+import { ButtonHandler } from '../ButtonHandler';
 import { FormComponent } from '../FormComponent';
 
 import './AddEvent.scss';
@@ -7,6 +8,11 @@ import './AddEvent.scss';
 export const AddEvent = () => {
   const [formStatus, setFormStatus] = useState(false);
   const [addingError, setAddingError] = useState(false);
+  const [addingSuccess, setAddingSuccess] = useState(false);
+
+  const handleFormStatus = useCallback(() => {
+    setFormStatus(false);
+  }, []);
 
   return (
     <div className="AddEventForm">
@@ -15,22 +21,29 @@ export const AddEvent = () => {
           <header className="AddEventForm__header">
             <h2 className="AddEventForm__title">Добавить событие</h2>
 
-            <button
-              className="AddEventForm__form-closer"
-              title="Закрыть форму добавления события"
-              onClick={() => {
-                setFormStatus(false);
-              }}
+            <ButtonHandler
+              handler={handleFormStatus}
+              title={'Закрыть форму добавления события'}
+              buttonClose={true}
             />
           </header>
 
           {addingError && (
-            <p className="AddEventForm__error">
-              Ошибка добавления! Уже есть событие на указанное время
+            <p className="AddEventForm__notification">
+              Ошибка добавления! Уже есть событие на указанное время!
             </p>
           )}
 
-          <FormComponent setAddingError={setAddingError} />
+          {addingSuccess && (
+            <p className="AddEventForm__notification AddEventForm__notification--success">
+              Событие успешно добавлено!
+            </p>
+          )}
+
+          <FormComponent
+            setAddingError={setAddingError}
+            setAddingSuccess={setAddingSuccess}
+          />
         </>
       ) : (
         <button

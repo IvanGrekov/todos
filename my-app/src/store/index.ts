@@ -60,14 +60,24 @@ class EventStore {
       .sort((prev, next) => prev.startTime.localeCompare(next.startTime));
   }
 
-  defineIsTimeFree(date: string, startTime: string, endTime: string): boolean {
+  defineIsTimeFree(
+    date: string,
+    startTime: string,
+    endTime: string,
+    id: string = ''
+  ): boolean {
     const events = this.eventsByAnyDate(date);
 
-    return !events.some(
-      (event: EventInterface) =>
+    return !events.some((event: EventInterface) => {
+      if (id === event.id) {
+        return false;
+      }
+
+      return (
         (startTime >= event.startTime && startTime < event.endTime) ||
-        (endTime > event.startTime && endTime < event.endTime)
-    );
+        (endTime > event.startTime && endTime <= event.endTime)
+      );
+    });
   }
 
   defineEventsDates(eventsList: EventInterface[]): string[] {

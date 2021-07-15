@@ -34,7 +34,17 @@ export const getYearForDisplay = (value: string): string =>
 export const getHtmlDateFormat = (value: string): string =>
   value.split('.').reverse().join('-'); // Initial format at top of this file
 
-export const createTodayDate = (): Date => {
+export const getTodayDate = (): Date => {
+  const currentDate = new Date();
+
+  return new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate()
+  );
+};
+
+export const createTodayWorkingDate = (): Date => {
   const currentDate = new Date();
 
   if (currentDate.getHours() >= 18) {
@@ -45,11 +55,7 @@ export const createTodayDate = (): Date => {
     );
   }
 
-  return new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getDate()
-  );
+  return getTodayDate();
 };
 
 export const roundMinutes = (value: number): number =>

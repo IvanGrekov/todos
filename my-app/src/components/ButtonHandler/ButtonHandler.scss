@@ -1,0 +1,18 @@
+@import '../../style-extends/variables';
+@import '../../style-extends/extends';
+
+.ButtonCloser {
+  @extend %button-handler;
+
+  &--white {
+    background-color: #fff;
+  }
+
+  &--close {
+    @extend %button-close;
+  }
+
+  &--edit {
+    @extend %button-edit;
+  }
+}

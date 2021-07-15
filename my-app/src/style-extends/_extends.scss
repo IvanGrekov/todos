@@ -66,3 +66,34 @@
     cursor: not-allowed;
   }
 }
+
+%button-handler {
+  @include createSquare(22px);
+  @extend %bg-contain;
+
+  border: 0;
+  background-color: $bg-color;
+  outline: 0;
+  transform: perspective(100px);
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: perspective(100px) translateZ(15px);
+  }
+}
+
+%button-close {
+  background-image: url('../images/delete-icon.svg');
+}
+
+%button-edit {
+  @include createSquare(26px);
+
+  margin-top: -6px;
+
+  background-image: url('../images/edit-icon.svg');
+
+  @media (min-width: $tablet-screen-width) {
+    @include createSquare(30px);
+  }
+}

@@ -77,10 +77,9 @@
 
   &__clock-icon {
     @include createSquare(20px);
+    @extend %bg-contain;
+
     background-image: url('../../images/clock-icon.svg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
 
     @media (min-width: $tablet-screen-width) {
       @include createSquare(25px);
@@ -105,40 +104,5 @@
     height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.24);
-  }
-
-  &__button {
-    @include createSquare(20px);
-    @extend %bg-contain;
-
-    border: 0;
-    background-color: #fff;
-    outline: 0;
-    transform: perspective(100px);
-    transition: transform 0.3s;
-
-    &--delete {
-      background-image: url('../../images/delete-icon.svg');
-    }
-
-    &--edit {
-      @include createSquare(25px);
-
-      margin-top: -6px;
-
-      background-image: url('../../images/edit-icon.svg');
-
-      @media (min-width: $tablet-screen-width) {
-        @include createSquare(30px);
-      }
-    }
-
-    &--shifted {
-      margin-left: -15px;
-    }
-
-    &:hover {
-      transform: perspective(100px) translateZ(15px);
-    }
   }
 }

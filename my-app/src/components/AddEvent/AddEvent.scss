@@ -36,26 +36,13 @@
     }
   }
 
-  &__form-closer {
-    @include createSquare(25px);
-    @extend %bg-contain;
-
-    background-color: $bg-color;
-    background-image: url('../../images/delete-icon.svg');
-
-    border: 0;
-    outline: 0;
-    transform: perspective(100px);
-    transition: transform 0.3s;
-
-    &:hover {
-      transform: perspective(100px) translateZ(15px);
-    }
-  }
-
-  &__error {
+  &__notification {
     margin-bottom: 20px;
 
     color: $error-color;
+
+    &--success {
+      color: $success-color;
+    }
   }
 }

@@ -23,6 +23,10 @@
     position: relative;
     width: 100%;
     margin-bottom: 15px;
+
+    &--success {
+      margin-bottom: 0;
+    }
   }
 
   &__title {
@@ -32,30 +36,19 @@
     text-align: center;
     color: $orange-color;
 
+    &--success {
+      color: $success-color;
+    }
+
     @media (min-width: $list-jump) {
       font-size: $font-size;
     }
   }
 
   &__closer {
-    @include createSquare(22px);
-    @extend %bg-contain;
-
     position: absolute;
     right: -7px;
     top: -18px;
-
-    background-color: #fff;
-    background-image: url('../../images/delete-icon.svg');
-
-    border: 0;
-    outline: 0;
-    transform: perspective(100px);
-    transition: transform 0.3s;
-
-    &:hover {
-      transform: perspective(100px) translateZ(15px);
-    }
   }
 
   &__inputs-wrapper {
@@ -65,14 +58,6 @@
     justify-content: center;
     gap: 10px;
     width: 100%;
-
-    @media (min-width: $mobile-screen-width) {
-      width: 200px;
-    }
-
-    @media (min-width: $tablet-screen-width) {
-      width: 250px;
-    }
   }
 
   &__label {
@@ -129,9 +114,9 @@
   }
 
   &__button {
-    width: 100%;
-    max-width: $input-width;
     @extend %button;
+
+    width: 100%;
 
     @media (min-width: $tablet-screen-width + 2 * $main-paddings) {
       margin-left: auto;

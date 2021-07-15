@@ -86,9 +86,9 @@
   }
 
   &__button {
-    width: 100%;
-    max-width: $input-width;
     @extend %button;
+
+    max-width: $input-width;
 
     @media (min-width: $tablet-screen-width + 2 * $main-paddings) {
       margin-left: auto;

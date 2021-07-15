@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import classNames from 'classnames';
+import React, { useState, useCallback } from 'react';
 
 import { observer } from 'mobx-react';
 import { EventInterface } from '../../types';
@@ -12,6 +11,7 @@ import {
 import { makeCapitalFirstLetter } from '../../helpers/EventItemHelper';
 import myEventStore from '../../store';
 import { ItemEditing } from '../ItemEditing';
+import { ButtonHandler } from '../ButtonHandler';
 
 import './EventItem.scss';
 
@@ -19,6 +19,14 @@ export const EventItem = observer(({ event }: { event: EventInterface }) => {
   const [editingStatus, setStatusEditing] = useState(false);
 
   const { title, date, startTime, endTime, id } = event;
+
+  const handleStatusEditing = useCallback(() => {
+    setStatusEditing((prevState) => !prevState);
+  }, [setStatusEditing]);
+
+  const onDeleteEvent = useCallback(() => {
+    myEventStore.deleteEvent(id);
+  }, [id]);
 
   return (
     <div className="EventItem">
@@ -33,12 +41,11 @@ export const EventItem = observer(({ event }: { event: EventInterface }) => {
           <h3 className="EventItem__title">
             <span>{makeCapitalFirstLetter(title)}</span>
 
-            <button
-              className="EventItem__button EventItem__button--edit"
-              title="Изменить событие"
-              onClick={() => {
-                setStatusEditing((prevState) => !prevState);
-              }}
+            <ButtonHandler
+              handler={handleStatusEditing}
+              title={'Изменить событие'}
+              whiteBackground={true}
+              buttonEdit={true}
             />
           </h3>
 
@@ -64,23 +71,19 @@ export const EventItem = observer(({ event }: { event: EventInterface }) => {
 
           {editingStatus && (
             <div className="EventItem__editing-form">
-              <ItemEditing event={event} setStatusEditing={setStatusEditing} />
+              <ItemEditing
+                event={event}
+                handleStatusEditing={handleStatusEditing}
+              />
             </div>
           )}
         </div>
 
-        <button
-          className={classNames(
-            'EventItem__button',
-            'EventItem__button--delete',
-            {
-              'EventItem__button--shifted': editingStatus,
-            }
-          )}
-          title="Удалить событие"
-          onClick={() => {
-            myEventStore.deleteEvent(id);
-          }}
+        <ButtonHandler
+          handler={onDeleteEvent}
+          title={'Удалить событие'}
+          whiteBackground={true}
+          buttonClose={true}
         />
       </div>
     </div>
