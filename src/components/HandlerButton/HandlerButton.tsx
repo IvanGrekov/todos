@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import classNames from 'classnames';
 
 import './HandlerButton.scss';
+
+interface Props {
+  handler: MouseEventHandler<HTMLButtonElement>;
+  title: string;
+  whiteBackground?: boolean;
+  buttonClose?: boolean;
+  buttonEdit?: boolean;
+}
 
 export const HandlerButton = React.memo(
   ({
@@ -10,13 +18,7 @@ export const HandlerButton = React.memo(
     whiteBackground = false,
     buttonClose = false,
     buttonEdit = false,
-  }: {
-    handler: Function;
-    title: string;
-    whiteBackground?: boolean;
-    buttonClose?: boolean;
-    buttonEdit?: boolean;
-  }) => {
+  }: Props) => {
     return (
       <button
         className={classNames('HandlerButton', {
@@ -25,9 +27,7 @@ export const HandlerButton = React.memo(
           'HandlerButton--edit': buttonEdit,
         })}
         title={title}
-        onClick={() => {
-          handler();
-        }}
+        onClick={handler}
       />
     );
   }

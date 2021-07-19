@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 
 import { ButtonType } from '../../types';
 
 import './Button.scss';
+
+interface Props {
+  handler?: MouseEventHandler<HTMLButtonElement>;
+  text: string;
+  title: string;
+  disabled?: boolean;
+  type?: ButtonType;
+}
 
 export const Button = React.memo(
   ({
@@ -11,22 +19,14 @@ export const Button = React.memo(
     title,
     disabled = false,
     type = 'button',
-  }: {
-    handler?: Function;
-    text: string;
-    title: string;
-    disabled?: boolean;
-    type?: ButtonType;
-  }) => {
+  }: Props) => {
     return (
       <button
         className="Button"
         title={title}
         disabled={disabled}
         type={type}
-        onClick={() => {
-          handler();
-        }}
+        onClick={handler}
       >
         {text}
       </button>

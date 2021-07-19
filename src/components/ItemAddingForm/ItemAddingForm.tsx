@@ -17,14 +17,13 @@ import './ItemAddingForm.scss';
 const submitText = 'Добавить';
 const submitTitle = 'Добавить событие';
 
+interface Props {
+  setAddingError: Function;
+  setAddingSuccess: Function;
+}
+
 export const ItemAddingForm = observer(
-  ({
-    setAddingError,
-    setAddingSuccess,
-  }: {
-    setAddingError: Function;
-    setAddingSuccess: Function;
-  }) => {
+  ({ setAddingError, setAddingSuccess }: Props) => {
     const clearSuccess = useCallback(() => {
       setAddingSuccess(false);
     }, [setAddingSuccess]);
@@ -81,9 +80,7 @@ export const ItemAddingForm = observer(
                       !errors.title && values.title,
                   })}
                   placeholder="Название события"
-                  onClick={() => {
-                    clearSuccess();
-                  }}
+                  onClick={clearSuccess}
                 />
                 <ErrorMessage
                   name="title"
@@ -103,9 +100,7 @@ export const ItemAddingForm = observer(
                     'ItemAddingForm__input--success':
                       !errors.date && values.date,
                   })}
-                  onClick={() => {
-                    clearSuccess();
-                  }}
+                  onClick={clearSuccess}
                 />
                 <ErrorMessage
                   name="date"
@@ -126,9 +121,7 @@ export const ItemAddingForm = observer(
                     'ItemAddingForm__input--success':
                       !errors.startTime && values.startTime,
                   })}
-                  onClick={() => {
-                    clearSuccess();
-                  }}
+                  onClick={clearSuccess}
                 />
                 <ErrorMessage
                   name="startTime"
@@ -152,9 +145,7 @@ export const ItemAddingForm = observer(
                       !errors.endTime && values.endTime,
                   })}
                   disabled={values.startTime === ''}
-                  onClick={() => {
-                    clearSuccess();
-                  }}
+                  onClick={clearSuccess}
                 />
                 <ErrorMessage
                   name="endTime"

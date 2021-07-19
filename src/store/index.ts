@@ -27,7 +27,7 @@ class EventStore {
   }
 
   addEvent(event: EventInterface) {
-    this.events.push(event);
+    this.events = [...this.events, event];
 
     this.updateEventsDates(this.events);
   }
@@ -47,20 +47,22 @@ class EventStore {
     this.events[eventIndex] = { ...changedEvent };
 
     if (oldEvent.date !== changedEvent.date) {
-      this.updateEventsDates(this.events);
+      this.updateEventsDates(this.events, oldEvent.date);
     }
   }
 
-  updateEventsDates(newEventsList: EventInterface[]) {
-    this.eventsDates = this.defineEventsDates(newEventsList);
+  updateEventsDates(newEventsList: EventInterface[], requiredDate?: string) {
+    this.eventsDates = requiredDate
+      ? [...this.defineEventsDates(newEventsList), requiredDate]
+      : this.defineEventsDates(newEventsList);
+
+    this.eventsDates.sort((prev, next) => prev.localeCompare(next));
   }
 
   defineEventsDates(eventsList: EventInterface[]): string[] {
     const dates = new Set(eventsList.map((event) => event.date));
 
-    return Array.from(dates.values()).sort((prev, next) =>
-      prev.localeCompare(next)
-    );
+    return Array.from(dates.values());
   }
 
   eventsByAnyDate(date: string): EventInterface[] {

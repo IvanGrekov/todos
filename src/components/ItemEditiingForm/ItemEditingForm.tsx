@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { Form, Field, ErrorMessage, FormikErrors, FormikTouched } from 'formik';
 import classNames from 'classnames';
 
@@ -15,6 +15,17 @@ const submitText = 'Изменить';
 const submitTitle = 'Изменить событие';
 const handlerCloserTitle = 'Закрыть форму изменения события';
 
+interface Props {
+  handleStatusEditing: MouseEventHandler<HTMLButtonElement>;
+  errorMessage: string;
+  values: FormValues;
+  errors: FormikErrors<FormValues>;
+  touched: FormikTouched<FormValues>;
+  isValid: boolean;
+  successEditing: boolean;
+  eventTitle: string;
+}
+
 export const ItemEditingForm = ({
   handleStatusEditing,
   errorMessage,
@@ -24,16 +35,7 @@ export const ItemEditingForm = ({
   isValid,
   successEditing,
   eventTitle,
-}: {
-  handleStatusEditing: Function;
-  errorMessage: string;
-  values: FormValues;
-  errors: FormikErrors<FormValues>;
-  touched: FormikTouched<FormValues>;
-  isValid: boolean;
-  successEditing: boolean;
-  eventTitle: string;
-}) => {
+}: Props) => {
   return (
     <Form className="ItemEditingForm">
       <header

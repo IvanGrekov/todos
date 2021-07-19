@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 
 import myEventStore from '../../store';
@@ -6,6 +6,13 @@ import myEventStore from '../../store';
 import './SelectDate.scss';
 
 export const SelectDate = observer(() => {
+  const setSelectedData = useCallback((event) => {
+    const value = event.target.value;
+
+    myEventStore.setSelectedData(value);
+    myEventStore.updateEventsDates(myEventStore.events);
+  }, []);
+
   return (
     <div className="SelectDate">
       <label htmlFor="select-date" className="SelectDate__label">
@@ -16,9 +23,7 @@ export const SelectDate = observer(() => {
           className="SelectDate__select"
           name="select-date"
           value={myEventStore.getSelectedData}
-          onChange={(event) => {
-            myEventStore.setSelectedData(event.target.value);
-          }}
+          onChange={setSelectedData}
         >
           <option value="" disabled>
             Выберите дату
