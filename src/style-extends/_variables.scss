@@ -11,10 +11,7 @@ $event-item-min-width: 320px - $main-paddings * 2;
 
 $event-iten-paddings: 10px;
 $inputs-horizontal-gap: 50px;
-$button-margin-right: (
-    $add-event-section-max-width - 2 * $input-width - $inputs-horizontal-gap - 2 *
-      $main-paddings
-  ) / 2;
+$button-margin-right: ($add-event-section-max-width - 2 * $input-width - $inputs-horizontal-gap - 2 * $main-paddings) / 2;
 
 $font-size: 26px;
 $mobile-font-size: 22px;
