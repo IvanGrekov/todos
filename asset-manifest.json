@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/todos/static/css/main.3ab165f6.chunk.css",
+    "main.css": "/todos/static/css/main.d47a7e4a.chunk.css",
     "main.js": "/todos/static/js/main.67b82925.chunk.js",
     "main.js.map": "/todos/static/js/main.67b82925.chunk.js.map",
     "runtime-main.js": "/todos/static/js/runtime-main.2073695c.js",
@@ -8,7 +8,7 @@
     "static/js/2.4069b9be.chunk.js": "/todos/static/js/2.4069b9be.chunk.js",
     "static/js/2.4069b9be.chunk.js.map": "/todos/static/js/2.4069b9be.chunk.js.map",
     "index.html": "/todos/index.html",
-    "static/css/main.3ab165f6.chunk.css.map": "/todos/static/css/main.3ab165f6.chunk.css.map",
+    "static/css/main.d47a7e4a.chunk.css.map": "/todos/static/css/main.d47a7e4a.chunk.css.map",
     "static/js/2.4069b9be.chunk.js.LICENSE.txt": "/todos/static/js/2.4069b9be.chunk.js.LICENSE.txt",
     "static/media/EventItem.scss": "/todos/static/media/clock-icon.c7131802.svg",
     "static/media/HandlerButton.scss": "/todos/static/media/edit-icon.ef1e9aa0.svg"
@@ -16,7 +16,7 @@
   "entrypoints": [
     "static/js/runtime-main.2073695c.js",
     "static/js/2.4069b9be.chunk.js",
-    "static/css/main.3ab165f6.chunk.css",
+    "static/css/main.d47a7e4a.chunk.css",
     "static/js/main.67b82925.chunk.js"
   ]
 }
