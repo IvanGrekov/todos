@@ -144,7 +144,7 @@ export const ItemAddingForm = observer(
                     'ItemAddingForm__input--success':
                       !errors.endTime && values.endTime,
                   })}
-                  disabled={values.startTime === ''}
+                  disabled={values.startTime === '' || errors.startTime}
                   onClick={clearSuccess}
                 />
                 <ErrorMessage
