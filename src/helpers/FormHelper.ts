@@ -10,6 +10,8 @@ import {
 
 const minTitleLength = 3;
 const minStartTime = 9;
+const maxStartTime = 17;
+const maxStartMinutes = 30;
 export const maxEndTime = 18;
 const safeMinutesGap = 30;
 
@@ -32,6 +34,8 @@ const validate = (values: FormValues): FormValues => {
     errors.startTime = 'Обязательно для ввода';
   } else if (checkStartTime(values.startTime)) {
     errors.startTime = generateStartTimeError();
+  } else if (checkMaxStartTime(values.startTime)) {
+    errors.startTime = generateMaxStartTimeError();
   }
   //#endregion
 
@@ -112,9 +116,29 @@ const checkStartTime = (value: string): boolean => {
   return hours < currentMinStartTime;
 };
 
+const checkMaxStartTime = (value: string): boolean => {
+  const hours = parseInt(value);
+  const minutes = parseInt(value.slice(3)); // Input time format - 09:00
+
+  if (hours > maxStartTime) {
+    return true;
+  }
+
+  if (hours === maxStartTime) {
+    return minutes > maxStartMinutes;
+  }
+
+  return false;
+};
+
 const generateStartTimeError = (): string =>
   `Минимальное время начала - ${currentMinStartTime}:${getValidMinutes(
     minStartMinutes
+  )}`;
+
+const generateMaxStartTimeError = (): string =>
+  `Максимальное время начала - ${maxStartTime}:${getValidMinutes(
+    maxStartMinutes
   )}`;
 //#endregion
 
